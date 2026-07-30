@@ -1,28 +1,100 @@
-/* styles.css */
-body {
-    /* Set a gradient background from purple to teal */
-    background: linear-gradient(to right, #6a3093, #a044ff, #5f2c82, #49a09d);
-    font-family: Arial, sans-serif;
-    /* Sets a clean, modern font for the body text */
-    color: white;
-    /* Sets the text color to white for better contrast */
-    margin: 0;
-    /* Removes default margin */
-    padding: 0;
-    /* Removes default padding */
-    display: flex;
-    /* Enables flexbox layout */
-    justify-content: center;
-    /* Centers content horizontally */
-    align-items: center;
-    /* Centers content vertically */
-    height: 100vh;
-    /* Makes the body take the full height of the viewport */
+/* Improved styles.css
+   - Uses CSS variables, system font stack, responsive sizing, accessible defaults
+   - Centers a .container instead of centering everything on the body
+*/
+
+:root{
+  --bg-1: #6a3093;
+  --bg-2: #a044ff;
+  --bg-3: #5f2c82;
+  --accent: #49a09d;
+  --text-color: #ffffff;
+  --container-bg: rgba(0,0,0,0.28); /* translucent panel for readability */
+  --max-width: 900px;
+  --gap: 1rem;
 }
 
+/* sensible defaults */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* page background */
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+  color: var(--text-color);
+  background: linear-gradient(90deg, var(--bg-1), var(--bg-2), var(--bg-3) 60%, var(--accent));
+  background-color: var(--bg-3); /* fallback */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh; /* prefer min-height to avoid mobile viewport issues */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem; /* prevents content touching screen edges on small devices */
+}
+
+/* content container for better readability and layout control */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  padding: clamp(1rem, 2.5vw, 2rem);
+  text-align: center;
+  background: var(--container-bg);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+  backdrop-filter: blur(6px); /* optional: elegant effect on supported browsers */
+}
+
+/* paragraph */
+p {
+  margin: 0 0 var(--gap) 0;
+  font-size: clamp(1rem, 2.5vw, 1.125rem);
+  line-height: 1.45;
+  opacity: 0.98;
+}
+
+/* main heading */
 h1 {
-    font-size: 2em;
-    /* Sets the size of the header text */
-    text-align: center;
-    /* Centers the header text */
+  margin: 0 0 0.5rem 0;
+  font-size: clamp(1.6rem, 4vw, 2.25rem);
+  line-height: 1.08;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* smaller version label — prefer class .version if this isn't a real section heading */
+h6,
+.version {
+  margin: 0;
+  font-size: 0.875rem;
+  opacity: 0.95;
+  font-weight: 500;
+  color: rgba(255,255,255,0.92);
+}
+
+/* accessibility: respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* small screens: tweak paddings */
+@media (max-width: 420px) {
+  .container {
+    padding: 1rem;
+    border-radius: 10px;
+  }
 }
